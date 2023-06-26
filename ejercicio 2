@@ -1,0 +1,64 @@
+#Definir la clase Nodo agregando los atributos
+
+class Nodo:
+    def __init__(self, num_ticket, num_caja):
+        self.num_ticket = num_ticket
+        self.num_caja = num_caja
+        self.siguiente = None
+
+#Definir la clase Cola Circular agregando el atributo cabeza que es el puntero del primer nodo de la lista
+class ColaCircular:
+    def __init__(self):
+        self.cabeza = None
+
+#Definir el metodo "agregar elemento" , el metodo recibe un num_ticket y num_caja
+
+    def agregar_elemento(self, num_ticket, num_caja):
+        nuevo_nodo = Nodo(num_ticket, num_caja)
+
+        if self.cabeza is None:
+            self.cabeza = nuevo_nodo
+            nuevo_nodo.siguiente = self.cabeza
+        else:
+            actual = self.cabeza
+            while actual.siguiente != self.cabeza:
+                actual = actual.siguiente
+            actual.siguiente = nuevo_nodo
+            nuevo_nodo.siguiente = self.cabeza
+
+#Definir el metodo "eliminar_elemento" , eliminara el primer elemento de la cola circular
+
+    def eliminar_elemento(self):
+        actual = self.cabeza
+        if actual is None:
+            print("La cola está vacía.")
+            return
+        elif actual.siguiente == actual:
+            self.cabeza = None
+        else:
+            while actual.siguiente != self.cabeza:
+                actual = actual.siguiente
+            actual.siguiente = self.cabeza.siguiente
+            self.cabeza = self.cabeza.siguiente
+
+    def imprimir_cola(self):
+        actual = self.cabeza
+        if actual is None:
+            print("La cola está vacía.")
+            return
+        else:
+            print("Imprimiendo la cola:")
+            while True:
+                print("Número de ticket:", actual.num_ticket, "Número de Caja:", actual.num_caja)
+                actual = actual.siguiente
+                if actual == self.cabeza:
+                    break
+
+cola = ColaCircular()
+cola.agregar_elemento(1, 2)
+cola.agregar_elemento(2, 1)
+cola.agregar_elemento(3, 3)
+cola.imprimir_cola()
+
+cola.eliminar_elemento()
+cola.imprimir_cola()
